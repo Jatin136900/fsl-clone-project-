@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -21,6 +22,49 @@ import {
 } from "lucide-react";
 
 import type { Variants } from "framer-motion";
+
+function AnimatedCounter({
+  value,
+  duration = 1.8,
+  delay = 0,
+  suffix = "",
+  decimals = 0,
+}: {
+  value: number;
+  duration?: number;
+  delay?: number;
+  suffix?: string;
+  decimals?: number;
+}) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => latest.toFixed(decimals));
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+
+  useEffect(() => {
+    if (inView) {
+      animate(count, value, {
+        duration: duration,
+        delay: delay,
+        ease: "easeOut",
+      });
+    }
+  }, [inView, count, value, duration, delay]);
+
+  useEffect(() => {
+    return rounded.on("change", (latest) => {
+      if (ref.current) {
+        const num = parseFloat(latest);
+        ref.current.textContent = decimals > 0
+          ? num.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix
+          : Math.round(num).toLocaleString() + suffix;
+      }
+    });
+  }, [rounded, suffix, decimals]);
+
+  return <span ref={ref}>0{suffix}</span>;
+}
+
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -75,7 +119,6 @@ export default function Landing() {
       <GlobalCareerJourney />
       <Countries />
       <SuccessStoriesMap />
-      <Testimonials />
       <CTA />
       <Footer />
     </div>
@@ -168,11 +211,11 @@ function Hero() {
               variants={fadeUp}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
-              <Link to="/signup" className="group inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-foreground text-background font-medium shadow-elegant hover:shadow-glow transition-all">
+              <Link to="/signup" className="group inline-flex items-center gap-2.5 px-7 py-4 md:px-[2.25rem] md:py-[1.125rem] rounded-xl bg-foreground text-background font-semibold text-base md:text-[1.05rem] shadow-elegant hover:shadow-glow transition-all">
                 I'm hiring for EU roles
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <Link to="/jobs" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass-strong font-medium hover:bg-accent transition-colors">
+              <Link to="/jobs" className="inline-flex items-center gap-2.5 px-6 py-3.5 md:px-8 md:py-4 rounded-xl glass-strong font-semibold text-base md:text-[1.05rem] hover:bg-accent transition-colors">
                 <PlayCircle className="h-4 w-4" />
                 Find European jobs
               </Link>
@@ -186,15 +229,21 @@ function Hero() {
               className="mt-10 grid grid-cols-3 gap-4 border-t border-border/60 pt-8"
             >
               <div>
-                <div className="font-display text-3xl font-semibold text-gradient-brand">48k+</div>
+                <div className="font-display text-3xl font-semibold text-gradient-brand">
+                  <AnimatedCounter value={48} suffix="k+" delay={0} />
+                </div>
                 <div className="text-xs text-muted-foreground mt-0.5">Active EU Employers</div>
               </div>
               <div>
-                <div className="font-display text-3xl font-semibold text-gradient-brand">71%</div>
+                <div className="font-display text-3xl font-semibold text-gradient-brand">
+                  <AnimatedCounter value={71} suffix="%" delay={0.2} />
+                </div>
                 <div className="text-xs text-muted-foreground mt-0.5">Faster Relocation Time</div>
               </div>
               <div>
-                <div className="font-display text-3xl font-semibold text-gradient-brand">100%</div>
+                <div className="font-display text-3xl font-semibold text-gradient-brand">
+                  <AnimatedCounter value={100} suffix="%" delay={0.4} />
+                </div>
                 <div className="text-xs text-muted-foreground mt-0.5">Verified EU Compliance</div>
               </div>
             </motion.div>
@@ -260,61 +309,44 @@ function HeroVisual() {
           </div>
         </motion.div>
 
-        {/* Floating AI card */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="absolute -left-6 sm:-left-12 bottom-16 glass-strong rounded-2xl p-4 shadow-elegant w-60 hidden sm:block"
-        >
-          <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground mb-2">
-            <Brain className="h-3.5 w-3.5 text-brand" /> EU VISA COMPLIANCE
-          </div>
-          {[
-            { label: "EU Degree equivalence", v: 100 },
-            { label: "Language certification", v: 95 },
-            { label: "Visa priority score", v: 98 },
-          ].map((row) => (
-            <div key={row.label} className="mb-2 last:mb-0">
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-muted-foreground">{row.label}</span>
-                <span className="font-semibold">{row.v}%</span>
-              </div>
-              <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${row.v}%` }}
-                  transition={{ duration: 1.2, delay: 0.6 }}
-                  className="h-full bg-[image:var(--gradient-brand)]"
-                />
-              </div>
-            </div>
-          ))}
-        </motion.div>
 
-        {/* Floating offer card */}
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute -right-4 sm:-right-10 top-12 glass-strong rounded-2xl p-3.5 shadow-elegant w-56 hidden sm:block"
-        >
-          <div className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-lg bg-success/15 grid place-items-center">
-              <CheckCircle2 className="h-4 w-4 text-success" />
-            </div>
-            <div className="text-xs">
-              <div className="font-semibold text-sm">EU Visa Approved</div>
-              <div className="text-muted-foreground">Relocating to Amsterdam 🇳🇱</div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </motion.div>
   );
 }
 
+const getCountryFlagUrl = (name: string) => {
+  const codes: Record<string, string> = {
+    Germany: "de",
+    Netherlands: "nl",
+    Ireland: "ie",
+    France: "fr",
+    Spain: "es",
+    Sweden: "se",
+    Austria: "at",
+    Poland: "pl",
+  };
+  const code = codes[name];
+  return code ? `https://flagcdn.com/${code}.svg` : "";
+};
+
+const getCountryCode = (name: string) => {
+  const codes: Record<string, string> = {
+    Germany: "DE",
+    Netherlands: "NL",
+    Ireland: "IE",
+    France: "FR",
+    Spain: "ES",
+    Sweden: "SE",
+    Austria: "AT",
+    Poland: "PL",
+  };
+  return codes[name] || "";
+};
+
 function Countries() {
   return (
-    <section id="countries" className="py-20 md:py-28">
+    <section id="countries" className="py-20 md:py-28 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6">
         <div className="max-w-2xl">
           <div className="text-xs uppercase tracking-[0.2em] text-brand font-semibold">European Corridors</div>
@@ -334,14 +366,25 @@ function Countries() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="group relative rounded-2xl p-6 bg-card border border-border hover:border-foreground/20 hover:shadow-elegant transition-all cursor-pointer"
+              className="group relative rounded-2xl p-6 bg-card border border-border hover:border-brand/30 hover:shadow-elegant transition-all duration-300 cursor-pointer overflow-hidden"
             >
-              <div className="text-4xl">{c.flag}</div>
-              <div className="mt-4 font-semibold">{c.name}</div>
-              <div className="mt-1 text-sm text-muted-foreground flex items-center gap-1.5">
-                <Briefcase className="h-3.5 w-3.5" /> {c.jobs} open roles
+              <div className="relative z-10 max-w-[calc(100%-80px)]">
+                <div className="inline-flex items-center justify-center px-2 py-1 rounded-md bg-secondary text-xs font-semibold text-muted-foreground tracking-wider mb-3">
+                  {getCountryCode(c.name)}
+                </div>
+                <div className="font-semibold text-lg">{c.name}</div>
+                <div className="mt-1 text-sm text-muted-foreground flex items-center gap-1.5">
+                  <Briefcase className="h-3.5 w-3.5" /> {c.jobs} open roles
+                </div>
               </div>
-              <ArrowRight className="absolute top-6 right-6 h-4 w-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all" />
+
+              <img
+                src={getCountryFlagUrl(c.name)}
+                alt={`${c.name} Flag`}
+                className="absolute right-0 bottom-0 w-24 h-16 object-cover rounded-tl-xl border-t border-l border-border/20 shadow-soft pointer-events-none group-hover:scale-110 transition-all duration-500 z-20 opacity-100 filter-none"
+              />
+
+              <ArrowRight className="absolute top-6 right-6 h-4 w-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all z-30" />
             </motion.div>
           ))}
         </div>
@@ -350,53 +393,6 @@ function Countries() {
   );
 }
 
-function Testimonials() {
-  return (
-    <section id="testimonials" className="py-20 md:py-28 bg-secondary/40">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="max-w-2xl mb-12">
-          <div className="text-xs uppercase tracking-[0.2em] text-brand font-semibold">Success Stories</div>
-          <h2 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.05]">
-            Relocation stories that inspire.
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-3 gap-5">
-          {testimonials.map((t, i) => (
-            <motion.figure
-              key={t.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="rounded-2xl p-7 bg-card border border-border shadow-soft flex flex-col"
-            >
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-warning text-warning" />
-                ))}
-              </div>
-              <blockquote className="font-display text-xl leading-snug tracking-tight flex-1">
-                "{t.quote}"
-              </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3">
-                <div
-                  className="h-10 w-10 rounded-full grid place-items-center text-sm font-semibold text-white"
-                  style={{ background: `oklch(0.6 0.18 ${180 + i * 50})` }}
-                >
-                  {t.avatar}
-                </div>
-                <div className="text-sm">
-                  <div className="font-semibold">{t.name}</div>
-                  <div className="text-muted-foreground text-xs">{t.role}</div>
-                </div>
-              </figcaption>
-            </motion.figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function CTA() {
   return (
@@ -429,19 +425,47 @@ function CTA() {
                 </Link>
               </div>
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3.5">
               {[
-                { icon: Users, label: "Free for candidates, always" },
-                { icon: Building2, label: "European compliance verification" },
-                { icon: TrendingUp, label: "Guided relocation assistance" },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-3 glass-strong rounded-xl p-4 text-background">
-                  <div className="h-9 w-9 rounded-lg bg-background/15 grid place-items-center">
-                    <item.icon className="h-4 w-4" />
-                  </div>
-                  <span className="text-sm">{item.label}</span>
-                </div>
-              ))}
+                {
+                  icon: Users,
+                  label: "Free for candidates, always",
+                  bgClass: "from-white/95 to-emerald-50/95 hover:from-white hover:to-emerald-100/95 border-emerald-500/20 hover:border-emerald-500/35",
+                  iconClass: "text-emerald-600 bg-emerald-50 border border-emerald-200/50",
+                  shadowClass: "hover:shadow-[0_8px_30px_rgba(16,185,129,0.12)]",
+                },
+                {
+                  icon: Building2,
+                  label: "European compliance verification",
+                  bgClass: "from-white/95 to-blue-50/95 hover:from-white hover:to-blue-100/95 border-blue-500/20 hover:border-blue-500/35",
+                  iconClass: "text-blue-600 bg-blue-50 border border-blue-200/50",
+                  shadowClass: "hover:shadow-[0_8px_30px_rgba(59,130,246,0.12)]",
+                },
+                {
+                  icon: TrendingUp,
+                  label: "Guided relocation assistance",
+                  bgClass: "from-white/95 to-purple-50/95 hover:from-white hover:to-purple-100/95 border-purple-500/20 hover:border-purple-500/35",
+                  iconClass: "text-purple-600 bg-purple-50 border border-purple-200/50",
+                  shadowClass: "hover:shadow-[0_8px_30px_rgba(168,85,247,0.12)]",
+                },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.5 }}
+                    className={`group flex items-center gap-4 bg-gradient-to-r ${item.bgClass} border rounded-2xl p-4 text-slate-900 shadow-soft hover:-translate-y-0.5 transition-all duration-300 cursor-pointer ${item.shadowClass}`}
+                  >
+                    <div className={`h-10 w-10 rounded-xl grid place-items-center shrink-0 transition-transform duration-300 group-hover:scale-105 ${item.iconClass}`}>
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-sm sm:text-base font-semibold tracking-tight text-slate-900/90">{item.label}</span>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -473,6 +497,34 @@ function Footer() {
 }
 
 function GlobalCareerJourney() {
+  const [progress, setProgress] = useState(0);
+  const [isJourneyCompleted, setIsJourneyCompleted] = useState(false);
+  const [showFinalGlow, setShowFinalGlow] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, 4, {
+        duration: 4.5,
+        ease: "linear",
+        onUpdate: (latest) => {
+          setProgress(latest);
+        },
+        onComplete: () => {
+          setTimeout(() => {
+            setIsJourneyCompleted(true);
+            setShowFinalGlow(true);
+            setTimeout(() => {
+              setShowFinalGlow(false);
+            }, 1500);
+          }, 400);
+        },
+      });
+      return () => controls.stop();
+    }
+  }, [isInView]);
+
   const journeySteps = [
     {
       num: "01",
@@ -506,8 +558,20 @@ function GlobalCareerJourney() {
     },
   ];
 
+  const getStepState = (index: number) => {
+    const isCompleted = index === 4 ? isJourneyCompleted : progress >= index + 1;
+    const isActive = index === 4 ? (progress >= 4 && !isJourneyCompleted) : (progress >= index && progress < index + 1);
+    return { isCompleted, isActive };
+  };
+
+  const getLineScale = (index: number) => {
+    if (progress <= index) return 0;
+    if (progress >= index + 1) return 1;
+    return progress - index;
+  };
+
   return (
-    <section className="relative py-24 overflow-hidden bg-background">
+    <section ref={sectionRef} className="relative py-24 overflow-hidden bg-background">
       {/* Cinematic background overlay */}
       <div className="absolute right-0 bottom-0 top-0 w-1/3 opacity-15 pointer-events-none hidden lg:block">
         <img
@@ -532,37 +596,103 @@ function GlobalCareerJourney() {
           </p>
         </div>
 
-        <div className="relative">
-          {/* Timeline connection line for desktop */}
-          <div className="absolute top-[32px] left-[10%] right-[10%] h-0.5 bg-border/40 hidden md:block" />
-
-          <div className="grid md:grid-cols-5 gap-8 relative z-10">
+        <div className={`relative transition-all duration-[1200ms] ease-out rounded-[2rem] p-8 -m-8 border border-transparent ${
+          showFinalGlow 
+            ? "shadow-[0_0_60px_oklch(0.62_0.19_256/_0.2)] bg-brand/5 border-brand/10" 
+            : ""
+        }`}>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-8 relative z-10">
             {journeySteps.map((step, i) => {
               const Icon = step.icon;
+              const { isCompleted, isActive } = getStepState(i);
+              const lineScale = i < 4 ? getLineScale(i) : 0;
+
               return (
-                <motion.div
+                <div
                   key={step.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="group flex flex-col items-center md:items-start text-center md:text-left relative"
+                  className="flex flex-row md:flex-col items-start gap-5 md:gap-0 relative group w-full"
                 >
-                  {/* Node circle */}
-                  <div className="relative flex items-center justify-center h-16 w-16 rounded-2xl glass-strong shadow-soft border border-border group-hover:border-brand/40 group-hover:shadow-glow transition-all duration-300 mb-6 bg-card">
-                    <Icon className="h-6 w-6 text-brand" />
-                    <span className="absolute -top-2 -right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[image:var(--gradient-brand)] text-brand-foreground shadow-soft">
-                      {step.num}
-                    </span>
+                  {/* Connection lines to the next step */}
+                  {i < 4 && (
+                    <>
+                      {/* Desktop lines */}
+                      <div className="absolute left-[64px] right-[-32px] top-[32px] h-0.5 bg-border/20 hidden md:block z-0 pointer-events-none" />
+                      <div 
+                        className="absolute left-[64px] right-[-32px] top-[32px] h-0.5 bg-[image:var(--gradient-brand)] hidden md:block origin-left transition-all duration-75 ease-out z-0 pointer-events-none" 
+                        style={{ transform: `scaleX(${lineScale})`, transformOrigin: "left" }}
+                      />
+
+                      {/* Mobile lines */}
+                      <div className="absolute left-[32px] top-[64px] bottom-[-40px] w-0.5 bg-border/20 md:hidden z-0 pointer-events-none" />
+                      <div 
+                        className="absolute left-[32px] top-[64px] bottom-[-40px] w-0.5 bg-[image:var(--gradient-brand)] md:hidden origin-top transition-all duration-75 ease-out z-0 pointer-events-none" 
+                        style={{ transform: `scaleY(${lineScale})`, transformOrigin: "top" }}
+                      />
+                    </>
+                  )}
+
+                  {/* Node circle wrapper */}
+                  <div
+                    className={`relative flex items-center justify-center h-16 w-16 rounded-2xl transition-all duration-500 bg-card shrink-0 md:mb-5 border-2 ${
+                      isActive
+                        ? "border-brand shadow-glow scale-110 z-10"
+                        : "border-border shadow-soft z-10"
+                    }`}
+                  >
+                    <Icon className={`h-6 w-6 transition-opacity duration-500 text-brand ${
+                      isActive || isCompleted ? "opacity-100" : "opacity-40"
+                    }`} />
+                    
+                    {/* Badge / Success indicator */}
+                    <AnimatePresence mode="wait">
+                      {isCompleted ? (
+                        <motion.span
+                          key="completed"
+                          initial={{ scale: 0, rotate: -45 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          exit={{ scale: 0 }}
+                          className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-success text-white flex items-center justify-center shadow-soft z-20"
+                        >
+                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                            <motion.path
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ duration: 0.3, ease: "easeOut" }}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="num"
+                          className={`absolute -top-1.5 -right-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-full transition-all duration-300 shadow-soft z-20 ${
+                            isActive
+                              ? "bg-brand text-brand-foreground scale-110"
+                              : "bg-secondary text-muted-foreground"
+                          }`}
+                        >
+                          {step.num}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </div>
 
-                  <h3 className="font-semibold text-lg group-hover:text-brand transition-colors duration-200">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2.5 text-sm text-muted-foreground leading-relaxed max-w-xs md:max-w-none">
-                    {step.desc}
-                  </p>
-                </motion.div>
+                  {/* Text details */}
+                  <div className="flex flex-col text-left">
+                    <h3 className={`font-semibold text-lg transition-colors duration-500 ${
+                      isActive ? "text-brand" : isCompleted ? "text-foreground" : "text-muted-foreground"
+                    }`}>
+                      {step.title}
+                    </h3>
+                    <p className={`mt-2 text-sm leading-relaxed transition-colors duration-500 ${
+                      isActive ? "text-foreground/90" : "text-muted-foreground"
+                    }`}>
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -573,23 +703,24 @@ function GlobalCareerJourney() {
 }
 
 function SuccessStoriesMap() {
-  const markers = [
-    { city: "Berlin, DE", lat: "45%", lon: "52%", relocations: "1,240+ hires" },
-    { city: "Amsterdam, NL", lat: "41%", lon: "47%", relocations: "980+ hires" },
-    { city: "Dublin, IE", lat: "36%", lon: "38%", relocations: "740+ hires" },
-    { city: "Paris, FR", lat: "48%", lon: "45%", relocations: "850+ hires" },
-    { city: "Warsaw, PL", lat: "43%", lon: "58%", relocations: "520+ hires" },
-  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   const stats = [
-    { value: "8,400+", label: "Candidates Relocated" },
-    { value: "1,600+", label: "Verified Employers" },
-    { value: "96.4%", label: "Visa Success Rate" },
-    { value: "14 Days", label: "Avg. Relocation Time" },
+    { numValue: 8400, suffix: "+", label: "Candidates Relocated", decimals: 0 },
+    { numValue: 1600, suffix: "+", label: "Verified Employers", decimals: 0 },
+    { numValue: 96.4, suffix: "%", label: "Visa Success Rate", decimals: 1 },
+    { numValue: 14, suffix: " Days", label: "Avg. Relocation Time", decimals: 0 },
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden text-white">
+    <section id="testimonials" className="relative py-24 overflow-hidden text-white">
       {/* Full-width premium background image with overlays */}
       <div className="absolute inset-0 z-0">
         <img
@@ -625,7 +756,12 @@ function SuccessStoriesMap() {
                   className="bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 hover:shadow-glow"
                 >
                   <div className="font-display text-3xl md:text-4xl font-semibold text-brand-glow">
-                    {s.value}
+                    <AnimatedCounter
+                      value={s.numValue}
+                      suffix={s.suffix}
+                      decimals={s.decimals}
+                      delay={i * 0.1}
+                    />
                   </div>
                   <div className="text-xs text-white/60 mt-1 uppercase tracking-wider">
                     {s.label}
@@ -635,44 +771,64 @@ function SuccessStoriesMap() {
             </div>
           </div>
 
-          {/* Right Column: Interactive Map Mockup */}
-          <div className="relative h-[350px] sm:h-[450px] w-full bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden shadow-elegant">
-            {/* World/Europe Map SVG Background */}
-            <svg
-              viewBox="0 0 1000 600"
-              className="absolute inset-0 h-full w-full opacity-20 text-white fill-current"
-            >
-              {/* Simplified outline of Europe/World map */}
-              <path d="M150,150 Q180,120 220,160 T300,140 T380,200 T420,180 T500,260 T600,200 T700,240 T800,180 T900,220 L950,500 L50,500 Z" />
-              <path d="M250,220 Q280,180 320,240 T400,200 T480,280 T520,250 T600,320 T700,260 T800,300 T900,240 L900,450 L100,450 Z" />
-            </svg>
-
-            {/* Animated Map Pins */}
-            {markers.map((marker, i) => (
-              <div
-                key={marker.city}
-                className="absolute group cursor-pointer"
-                style={{ top: marker.lat, left: marker.lon }}
+          {/* Right Column: Auto-playing Testimonial Slider */}
+          <div className="relative h-[350px] sm:h-[450px] w-full bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden shadow-elegant flex flex-col p-8 sm:p-12">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, x: 20, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -20, scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="flex flex-col flex-1 justify-between relative z-10"
               >
-                <div className="relative">
-                  {/* Ring animation */}
-                  <span className="absolute -inset-2.5 rounded-full bg-brand-glow/40 animate-pulse-ring" />
-                  {/* Core pin */}
-                  <div className="h-3 w-3 rounded-full bg-brand-glow border-2 border-white shadow-soft relative z-10" />
+                {/* 5-Star Rating */}
+                <div>
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, idx) => (
+                      <Star key={idx} className="h-5 w-5 fill-warning text-warning" />
+                    ))}
+                  </div>
+
+                  {/* Testimonial text */}
+                  <blockquote className="font-display text-2xl sm:text-3xl leading-snug tracking-tight text-white mb-6">
+                    "{testimonials[activeIndex].quote}"
+                  </blockquote>
                 </div>
 
-                {/* Tooltip on hover */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 scale-0 group-hover:scale-100 transition-all origin-bottom bg-foreground text-background text-[10px] rounded-lg p-2 shadow-elegant z-20 pointer-events-none text-center">
-                  <div className="font-semibold">{marker.city}</div>
-                  <div className="text-[9px] opacity-80 mt-0.5">{marker.relocations}</div>
+                {/* Profile Information */}
+                <div className="flex items-center gap-4">
+                  <div
+                    className="h-12 w-12 rounded-full grid place-items-center text-base font-semibold text-white shrink-0 shadow-soft"
+                    style={{ background: `oklch(0.6 0.18 ${180 + activeIndex * 50})` }}
+                  >
+                    {testimonials[activeIndex].avatar}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white text-base sm:text-lg">
+                      {testimonials[activeIndex].name}
+                    </div>
+                    <div className="text-white/60 text-xs sm:text-sm">
+                      {testimonials[activeIndex].role}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              </motion.div>
+            </AnimatePresence>
 
-            {/* Decorative Compass / Grid lines */}
-            <div className="absolute right-6 bottom-6 flex items-center gap-2 text-white/40 text-[10px]">
-              <Globe2 className="h-4 w-4 animate-pulse" />
-              <span>ACTIVE CHANNELS</span>
+            {/* Slider Dots */}
+            <div className="absolute bottom-8 right-8 sm:bottom-12 sm:right-12 flex gap-1.5 z-30">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveIndex(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    activeIndex === i ? "w-6 bg-brand" : "w-1.5 bg-white/20 hover:bg-white/40"
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
