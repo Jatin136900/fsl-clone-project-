@@ -125,9 +125,9 @@ function CandidateLogin() {
           <label className="flex items-center gap-2 text-muted-foreground cursor-pointer select-none">
             <input type="checkbox" className="rounded border-border text-foreground focus:ring-foreground/5" /> Remember me
           </label>
-          <a className="text-foreground underline underline-offset-4 cursor-pointer hover:opacity-85 transition-opacity">
+          <Link to="/candidate/forgot-password" className="text-foreground underline underline-offset-4 cursor-pointer hover:opacity-85 transition-opacity">
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         <PrimaryButton disabled={loading}>

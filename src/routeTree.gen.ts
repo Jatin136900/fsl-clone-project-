@@ -14,9 +14,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmployersDashboardRouteImport } from './routes/employers.dashboard'
 import { Route as CompanyRegisterRouteImport } from './routes/company.register'
 import { Route as CompanyLoginRouteImport } from './routes/company.login'
+import { Route as CompanyForgotPasswordRouteImport } from './routes/company.forgot-password'
 import { Route as CandidatesDashboardRouteImport } from './routes/candidates.dashboard'
 import { Route as CandidateRegisterRouteImport } from './routes/candidate.register'
 import { Route as CandidateLoginRouteImport } from './routes/candidate.login'
+import { Route as CandidateForgotPasswordRouteImport } from './routes/candidate.forgot-password'
 
 const JobsRoute = JobsRouteImport.update({
   id: '/jobs',
@@ -43,6 +45,11 @@ const CompanyLoginRoute = CompanyLoginRouteImport.update({
   path: '/company/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompanyForgotPasswordRoute = CompanyForgotPasswordRouteImport.update({
+  id: '/company/forgot-password',
+  path: '/company/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CandidatesDashboardRoute = CandidatesDashboardRouteImport.update({
   id: '/candidates/dashboard',
   path: '/candidates/dashboard',
@@ -58,13 +65,20 @@ const CandidateLoginRoute = CandidateLoginRouteImport.update({
   path: '/candidate/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CandidateForgotPasswordRoute = CandidateForgotPasswordRouteImport.update({
+  id: '/candidate/forgot-password',
+  path: '/candidate/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/jobs': typeof JobsRoute
+  '/candidate/forgot-password': typeof CandidateForgotPasswordRoute
   '/candidate/login': typeof CandidateLoginRoute
   '/candidate/register': typeof CandidateRegisterRoute
   '/candidates/dashboard': typeof CandidatesDashboardRoute
+  '/company/forgot-password': typeof CompanyForgotPasswordRoute
   '/company/login': typeof CompanyLoginRoute
   '/company/register': typeof CompanyRegisterRoute
   '/employers/dashboard': typeof EmployersDashboardRoute
@@ -72,9 +86,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/jobs': typeof JobsRoute
+  '/candidate/forgot-password': typeof CandidateForgotPasswordRoute
   '/candidate/login': typeof CandidateLoginRoute
   '/candidate/register': typeof CandidateRegisterRoute
   '/candidates/dashboard': typeof CandidatesDashboardRoute
+  '/company/forgot-password': typeof CompanyForgotPasswordRoute
   '/company/login': typeof CompanyLoginRoute
   '/company/register': typeof CompanyRegisterRoute
   '/employers/dashboard': typeof EmployersDashboardRoute
@@ -83,9 +99,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/jobs': typeof JobsRoute
+  '/candidate/forgot-password': typeof CandidateForgotPasswordRoute
   '/candidate/login': typeof CandidateLoginRoute
   '/candidate/register': typeof CandidateRegisterRoute
   '/candidates/dashboard': typeof CandidatesDashboardRoute
+  '/company/forgot-password': typeof CompanyForgotPasswordRoute
   '/company/login': typeof CompanyLoginRoute
   '/company/register': typeof CompanyRegisterRoute
   '/employers/dashboard': typeof EmployersDashboardRoute
@@ -95,9 +113,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/jobs'
+    | '/candidate/forgot-password'
     | '/candidate/login'
     | '/candidate/register'
     | '/candidates/dashboard'
+    | '/company/forgot-password'
     | '/company/login'
     | '/company/register'
     | '/employers/dashboard'
@@ -105,9 +125,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/jobs'
+    | '/candidate/forgot-password'
     | '/candidate/login'
     | '/candidate/register'
     | '/candidates/dashboard'
+    | '/company/forgot-password'
     | '/company/login'
     | '/company/register'
     | '/employers/dashboard'
@@ -115,9 +137,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/jobs'
+    | '/candidate/forgot-password'
     | '/candidate/login'
     | '/candidate/register'
     | '/candidates/dashboard'
+    | '/company/forgot-password'
     | '/company/login'
     | '/company/register'
     | '/employers/dashboard'
@@ -126,9 +150,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   JobsRoute: typeof JobsRoute
+  CandidateForgotPasswordRoute: typeof CandidateForgotPasswordRoute
   CandidateLoginRoute: typeof CandidateLoginRoute
   CandidateRegisterRoute: typeof CandidateRegisterRoute
   CandidatesDashboardRoute: typeof CandidatesDashboardRoute
+  CompanyForgotPasswordRoute: typeof CompanyForgotPasswordRoute
   CompanyLoginRoute: typeof CompanyLoginRoute
   CompanyRegisterRoute: typeof CompanyRegisterRoute
   EmployersDashboardRoute: typeof EmployersDashboardRoute
@@ -171,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompanyLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company/forgot-password': {
+      id: '/company/forgot-password'
+      path: '/company/forgot-password'
+      fullPath: '/company/forgot-password'
+      preLoaderRoute: typeof CompanyForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/candidates/dashboard': {
       id: '/candidates/dashboard'
       path: '/candidates/dashboard'
@@ -192,15 +225,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CandidateLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/candidate/forgot-password': {
+      id: '/candidate/forgot-password'
+      path: '/candidate/forgot-password'
+      fullPath: '/candidate/forgot-password'
+      preLoaderRoute: typeof CandidateForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   JobsRoute: JobsRoute,
+  CandidateForgotPasswordRoute: CandidateForgotPasswordRoute,
   CandidateLoginRoute: CandidateLoginRoute,
   CandidateRegisterRoute: CandidateRegisterRoute,
   CandidatesDashboardRoute: CandidatesDashboardRoute,
+  CompanyForgotPasswordRoute: CompanyForgotPasswordRoute,
   CompanyLoginRoute: CompanyLoginRoute,
   CompanyRegisterRoute: CompanyRegisterRoute,
   EmployersDashboardRoute: EmployersDashboardRoute,

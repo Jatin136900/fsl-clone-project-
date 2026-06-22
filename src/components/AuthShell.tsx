@@ -21,8 +21,9 @@ export function AuthShell({
   const isCandidate = pathname.includes("/candidate") || (!pathname.includes("/company") && side !== "employer");
   const isCompany = pathname.includes("/company") || (!pathname.includes("/candidate") && side === "employer");
   const isRegister = pathname.includes("/register") || pathname.includes("/signup");
+  const isForgotPassword = pathname.includes("forgot-password");
 
-  const currentAction = isRegister ? "register" : "login";
+  const currentAction = isForgotPassword ? "forgot-password" : isRegister ? "register" : "login";
 
   const candidatePath = `/candidate/${currentAction}`;
   const companyPath = `/company/${currentAction}`;
