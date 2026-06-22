@@ -6,8 +6,8 @@ import { Building2, CheckCircle2 } from "lucide-react";
 export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: [
-      { title: "Create your company account · TalentBridge AI" },
-      { name: "description", content: "Hire verified, video-first talent from 147 countries. Free company account, unlimited job postings." },
+      { title: "Create your company account · WorkInEurope" },
+      { name: "description", content: "Hire verified, video-first talent for European roles. Free company account, unlimited job postings." },
     ],
   }),
   component: EmployerSignup,
@@ -61,12 +61,14 @@ function EmployerSignup() {
         <Field label="Country">
           <select className="w-full px-4 py-3 rounded-xl bg-card border border-border outline-none focus:border-foreground/30">
             <option>Select country</option>
-            <option>🇦🇪 UAE</option>
             <option>🇩🇪 Germany</option>
-            <option>🇨🇦 Canada</option>
-            <option>🇸🇦 Saudi Arabia</option>
-            <option>🇬🇧 United Kingdom</option>
-            <option>🇸🇬 Singapore</option>
+            <option>🇳🇱 Netherlands</option>
+            <option>🇮🇪 Ireland</option>
+            <option>🇫🇷 France</option>
+            <option>🇪🇸 Spain</option>
+            <option>🇸🇪 Sweden</option>
+            <option>🇦🇹 Austria</option>
+            <option>🇵🇱 Poland</option>
           </select>
         </Field>
         <Field label="Password" hint="8 characters minimum">

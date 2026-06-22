@@ -32,35 +32,35 @@ export function AuthShell({
             <div className="h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
               <Sparkles className="h-4 w-4" />
             </div>
-            <span className="font-display text-xl">TalentBridge AI</span>
+            <span className="font-display text-xl">WorkInEurope</span>
           </Link>
           <div className="max-w-md">
             <div className="text-xs uppercase tracking-[0.25em] text-background/60 mb-4">
-              {side === "employer" ? "For employers" : "For candidates"}
+              {side === "employer" ? "For EU employers" : "For candidates"}
             </div>
             <h2 className="font-display text-5xl leading-[1.05] tracking-tight">
               {side === "employer"
-                ? "Hire verified talent from 147 countries."
-                : "Your next career is one video away."}
+                ? "Hire verified global talent for EU roles."
+                : "Your European career is one video away."}
             </h2>
             <p className="mt-5 text-background/70 leading-relaxed">
               {side === "employer"
-                ? "Post unlimited jobs, search millions of video-verified candidates, and run your full hiring pipeline in one place."
-                : "Build a video resume in minutes. Apply to thousands of global jobs with visa sponsorship — and get matched by AI."}
+                ? "Post unlimited jobs, search millions of video-verified candidates, and run your European hiring pipeline in one place."
+                : "Build a video resume in minutes. Apply to thousands of European jobs with visa sponsorship — and get matched by AI."}
             </p>
           </div>
           <div className="flex gap-6 text-sm text-background/60">
             <div>
               <div className="font-display text-3xl text-background">2.4M+</div>
-              <div>Verified candidates</div>
+              <div>Candidates</div>
             </div>
             <div>
               <div className="font-display text-3xl text-background">48k</div>
-              <div>Active employers</div>
+              <div>EU Employers</div>
             </div>
             <div>
-              <div className="font-display text-3xl text-background">147</div>
-              <div>Countries</div>
+              <div className="font-display text-3xl text-background">8</div>
+              <div>EU Target Countries</div>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@ export function AuthShell({
             <div className="h-7 w-7 rounded-md bg-[image:var(--gradient-brand)] grid place-items-center">
               <Sparkles className="h-3.5 w-3.5 text-brand-foreground" />
             </div>
-            <span className="font-display">TalentBridge</span>
+            <span className="font-display">WorkInEurope</span>
           </Link>
         </div>
         <div className="flex-1 grid place-items-center px-6 py-10">

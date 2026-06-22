@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/employers/dashboard")({
-  head: () => ({ meta: [{ title: "Employer dashboard · TalentBridge AI" }] }),
+  head: () => ({ meta: [{ title: "Employer dashboard · WorkInEurope" }] }),
   component: EmployerDashboard,
 });
 
@@ -18,11 +18,11 @@ const kpis = [
 ];
 
 const candidates = [
-  { name: "Priya Nadkarni", role: "Registered Nurse", country: "🇮🇳 Manila → UAE", match: 98, stage: "Interview", trust: 94 },
-  { name: "Samuel Okafor", role: "Senior Welder", country: "🇳🇬 Lagos → Canada", match: 95, stage: "Shortlist", trust: 91 },
-  { name: "Linh Tran", role: "React Engineer", country: "🇻🇳 Hanoi → Remote", match: 93, stage: "Offer", trust: 96 },
-  { name: "Hassan Ali", role: "Chef de Partie", country: "🇵🇰 Karachi → Singapore", match: 91, stage: "Review", trust: 88 },
-  { name: "Joana Reyes", role: "Hospitality Lead", country: "🇵🇭 Cebu → UAE", match: 90, stage: "Review", trust: 92 },
+  { name: "Priya Nadkarni", role: "Registered Nurse", country: "🇮🇳 India → Ireland", match: 98, stage: "Interview", trust: 94 },
+  { name: "Samuel Okafor", role: "Senior Welder", country: "🇳🇬 Nigeria → Sweden", match: 95, stage: "Shortlist", trust: 91 },
+  { name: "Linh Tran", role: "React Engineer", country: "🇻🇳 Vietnam → Germany", match: 93, stage: "Offer", trust: 96 },
+  { name: "Hassan Ali", role: "Chef de Partie", country: "🇵🇰 Pakistan → France", match: 91, stage: "Review", trust: 88 },
+  { name: "Joana Reyes", role: "Hospitality Lead", country: "🇵🇭 Philippines → Netherlands", match: 90, stage: "Review", trust: 92 },
 ];
 
 const pipeline = [
@@ -191,7 +191,7 @@ function AITalentSearch() {
         Describe the role in plain English. Get a ranked shortlist in seconds.
       </p>
       <div className="mt-3 rounded-xl border border-border bg-background p-3 text-sm">
-        "Find me ICU nurses with DHA license, fluent English, open to Dubai relocation."
+        "Find me React developers with European degree equivalence, fluent English, open to Amsterdam relocation."
       </div>
       <button className="mt-3 w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-foreground text-background text-sm font-medium">
         Run AI search <ArrowRight className="h-3.5 w-3.5" />
@@ -204,7 +204,7 @@ function RecentJobs() {
   const jobs = [
     { title: "Senior Robotics Engineer", apps: 42, status: "Live" },
     { title: "QA Automation", apps: 28, status: "Live" },
-    { title: "Field Service Tech (Dubai)", apps: 19, status: "Draft" },
+    { title: "Field Service Tech (Munich)", apps: 19, status: "Draft" },
   ];
   return (
     <Card title="Recent job posts" icon={Briefcase}>
@@ -227,13 +227,13 @@ function RecentJobs() {
 
 function ComplianceCard() {
   return (
-    <Card title="Global compliance" icon={ShieldCheck}>
+    <Card title="European compliance" icon={ShieldCheck}>
       <ul className="mt-3 text-sm space-y-2">
         {[
-          { l: "🇦🇪 UAE labor cards", v: "Up to date" },
-          { l: "🇩🇪 EU work permits", v: "2 expiring" },
-          { l: "🇸🇬 EP applications", v: "Auto-filed" },
-          { l: "🇨🇦 LMIA tracking", v: "1 pending" },
+          { l: "🇩🇪 DE Blue Card filings", v: "Up to date" },
+          { l: "🇳🇱 NL IND sponsorships", v: "2 expiring" },
+          { l: "🇮🇪 IE Critical Skills permits", v: "Auto-filed" },
+          { l: "🇵🇱 PL Voivodeship permits", v: "1 pending" },
         ].map((row) => (
           <li key={row.l} className="flex items-center justify-between">
             <span>{row.l}</span>

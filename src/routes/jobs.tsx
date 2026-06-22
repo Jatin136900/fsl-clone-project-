@@ -6,8 +6,8 @@ import { Search, MapPin, Briefcase, Calendar, ShieldCheck, ArrowRight, Bookmark,
 export const Route = createFileRoute("/jobs")({
   head: () => ({
     meta: [
-      { title: "Global Jobs · TalentBridge AI" },
-      { name: "description", content: "Browse thousands of global jobs with visa sponsorship. Filter by country, salary, and remote/onsite." },
+      { title: "Browse European Jobs · WorkInEurope" },
+      { name: "description", content: "Browse verified European jobs with visa sponsorship. Filter by EU country, salary, and work mode." },
     ],
   }),
   component: JobsPage,
@@ -39,7 +39,7 @@ function JobsPage() {
             <div className="h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
               <Sparkles className="h-4 w-4 text-brand-foreground" />
             </div>
-            <span className="font-display text-lg">TalentBridge AI</span>
+            <span className="font-display text-lg">WorkInEurope</span>
           </Link>
           <div className="flex items-center gap-2 text-sm">
             <Link to="/candidates/signin" className="px-3 py-2 hover:bg-accent rounded-lg">Sign in</Link>
@@ -53,10 +53,10 @@ function JobsPage() {
       <section className="bg-aurora border-b border-border">
         <div className="mx-auto max-w-7xl px-6 py-14 md:py-20">
           <h1 className="font-display text-4xl md:text-5xl tracking-tight leading-[1.05]">
-            {filtered.length.toLocaleString()} global roles. <em className="not-italic text-gradient-brand">Visa-ready</em>.
+            {filtered.length.toLocaleString()} European roles. <em className="not-italic text-gradient-brand">Visa-ready</em>.
           </h1>
           <p className="mt-4 text-muted-foreground text-lg max-w-2xl">
-            Verified employers from 147 countries. Apply with a video resume — get matched in days.
+            Verified employers across Europe's leading economies. Apply with a video resume — relocate in days.
           </p>
           <div className="mt-8 glass-strong rounded-2xl p-2 flex flex-col md:flex-row gap-2 max-w-3xl shadow-elegant">
             <div className="flex-1 flex items-center gap-2 px-4">

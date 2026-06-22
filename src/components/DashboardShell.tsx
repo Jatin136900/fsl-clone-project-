@@ -110,7 +110,7 @@ export function DashboardShell({
               <Sparkles className="h-4 w-4 text-brand-foreground" />
             </div>
             <div>
-              <div className="font-display text-lg leading-none">TalentBridge</div>
+              <div className="font-display text-lg leading-none">WorkInEurope</div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">
                 {role === "candidate" ? "Candidate" : "Employer"}
               </div>

@@ -7,21 +7,21 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/candidates/dashboard")({
-  head: () => ({ meta: [{ title: "Candidate dashboard · TalentBridge AI" }] }),
+  head: () => ({ meta: [{ title: "Candidate dashboard · WorkInEurope" }] }),
   component: CandidateDashboard,
 });
 
 const recommendations = [
-  { title: "Registered Nurse", company: "Mercy Health · 🇦🇪 Dubai", salary: "3,800 EUR/mo", match: 98 },
-  { title: "Senior Nurse — ICU", company: "Berlin Klinikum · 🇩🇪 Berlin", salary: "4,200 EUR/mo", match: 94 },
-  { title: "Charge Nurse", company: "Sunrise Hospital · 🇸🇦 Riyadh", salary: "3,600 EUR/mo", match: 91 },
+  { title: "Registered Nurse", company: "Mercy Health · 🇮🇪 Dublin", salary: "4,200 EUR/mo", match: 98 },
+  { title: "Senior Nurse — ICU", company: "Berlin Klinikum · 🇩🇪 Berlin", salary: "4,500 EUR/mo", match: 94 },
+  { title: "Charge Nurse", company: "Vienna Care · 🇦🇹 Vienna", salary: "4,100 EUR/mo", match: 91 },
 ];
 
 const applications = [
-  { title: "Registered Nurse", company: "Mercy Health · Dubai", stage: "Interview", color: "bg-warning" },
-  { title: "ICU Specialist", company: "Berlin Klinikum", stage: "Shortlisted", color: "bg-brand" },
-  { title: "Pediatric Nurse", company: "Maple Care · Toronto", stage: "Reviewed", color: "bg-muted-foreground" },
-  { title: "Emergency Nurse", company: "GreenGrid · Singapore", stage: "Submitted", color: "bg-muted-foreground" },
+  { title: "Registered Nurse", company: "Mercy Health · Dublin", stage: "Interview", color: "bg-warning" },
+  { title: "ICU Specialist", company: "Berlin Klinikum · Berlin", stage: "Shortlisted", color: "bg-brand" },
+  { title: "Pediatric Nurse", company: "Rotterdam Care · Rotterdam", stage: "Reviewed", color: "bg-muted-foreground" },
+  { title: "Emergency Nurse", company: "Stockholm Clinic · Stockholm", stage: "Submitted", color: "bg-muted-foreground" },
 ];
 
 function CandidateDashboard() {
@@ -256,10 +256,10 @@ function RelocationCard() {
     <Card>
       <CardTitle icon={Plane}>Visa & Relocation</CardTitle>
       <ul className="mt-3 text-sm space-y-2">
-        <li className="flex items-center justify-between"><span>🇦🇪 UAE</span><span className="text-success text-xs font-semibold">Eligible</span></li>
+        <li className="flex items-center justify-between"><span>🇮🇪 Ireland</span><span className="text-success text-xs font-semibold">Eligible</span></li>
         <li className="flex items-center justify-between"><span>🇩🇪 Germany</span><span className="text-success text-xs font-semibold">Eligible</span></li>
-        <li className="flex items-center justify-between"><span>🇨🇦 Canada</span><span className="text-warning text-xs font-semibold">Docs needed</span></li>
-        <li className="flex items-center justify-between"><span>🇬🇧 UK</span><span className="text-muted-foreground text-xs font-semibold">Review</span></li>
+        <li className="flex items-center justify-between"><span>🇳🇱 Netherlands</span><span className="text-warning text-xs font-semibold">Docs needed</span></li>
+        <li className="flex items-center justify-between"><span>🇦🇹 Austria</span><span className="text-muted-foreground text-xs font-semibold">Review</span></li>
       </ul>
     </Card>
   );

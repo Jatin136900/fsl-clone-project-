@@ -6,8 +6,8 @@ import { ShieldCheck } from "lucide-react";
 export const Route = createFileRoute("/candidates/signup")({
   head: () => ({
     meta: [
-      { title: "Create your candidate account · TalentBridge AI" },
-      { name: "description", content: "Join 2.4M+ verified candidates. Build a video resume and apply to global jobs in minutes." },
+      { title: "Create your candidate account · WorkInEurope" },
+      { name: "description", content: "Join 2.4M+ verified candidates. Build a video resume and apply to European jobs in minutes." },
     ],
   }),
   component: CandidateSignup,

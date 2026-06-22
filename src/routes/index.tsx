@@ -4,17 +4,17 @@ import Landing from "@/components/Landing";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TalentBridge AI — Hire the world's best talent, on video" },
+      { title: "WorkInEurope — Find jobs and hire verified global talent in Europe" },
       {
         name: "description",
         content:
-          "TalentBridge AI connects international employers with verified, video-first candidates across 147 countries. AI matching, visa support, and hiring in days.",
+          "WorkInEurope connects international professionals with verified European employers. Find visa-sponsored roles, showcase your skills on video, and relocate in days.",
       },
-      { property: "og:title", content: "TalentBridge AI — Hiring without borders" },
+      { property: "og:title", content: "WorkInEurope — Your European Career Gateway" },
       {
         property: "og:description",
         content:
-          "Video-first global recruitment platform powered by AI. From verified candidates to visa-ready hires in days.",
+          "Streamlined cross-border hiring for European employers. Hire verified candidates with built-in visa relocation support.",
       },
     ],
   }),

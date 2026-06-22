@@ -5,8 +5,8 @@ import { AuthShell, Field, Input, PrimaryButton } from "@/components/AuthShell";
 export const Route = createFileRoute("/candidates/signin")({
   head: () => ({
     meta: [
-      { title: "Candidate sign in · TalentBridge AI" },
-      { name: "description", content: "Sign in to your candidate account on TalentBridge AI." },
+      { title: "Candidate sign in · WorkInEurope" },
+      { name: "description", content: "Sign in to your candidate account on WorkInEurope." },
     ],
   }),
   component: CandidateSignin,
@@ -29,7 +29,7 @@ function CandidateSignin() {
       }
       footer={
         <>
-          New to TalentBridge?{" "}
+          New to WorkInEurope?{" "}
           <Link to="/candidates/signup" className="font-medium text-foreground underline underline-offset-4">
             Create an account
           </Link>
