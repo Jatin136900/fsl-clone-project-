@@ -1,10 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { DashboardShell, CANDIDATE_NAV } from "@/components/DashboardShell";
 import { motion } from "framer-motion";
 import {
   Video, Sparkles, ArrowRight, CheckCircle2, Briefcase, Calendar, Brain, Languages,
   GraduationCap, ShieldCheck, TrendingUp, Plane, PlayCircle, Plus, Star,
 } from "lucide-react";
+
+import { useAuth } from "@/context/AuthContext";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/candidates/dashboard")({
   head: () => ({ meta: [{ title: "Candidate dashboard · WorkInEurope" }] }),
@@ -25,11 +28,31 @@ const applications = [
 ];
 
 function CandidateDashboard() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && (!user || user.role !== "candidate")) {
+      navigate({ to: "/candidate/login" });
+    }
+  }, [user, loading, navigate]);
+
+  if (loading || !user || user.role !== "candidate") {
+    return (
+      <div className="min-h-screen bg-background grid place-items-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+          <p className="text-sm text-muted-foreground font-medium animate-pulse">Verifying credentials…</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <DashboardShell
       role="candidate"
       nav={CANDIDATE_NAV}
-      user={{ name: "Priya Nadkarni", email: "priya@email.com", avatar: "PN" }}
+      user={{ name: user.name, email: user.email, avatar: user.avatar }}
     >
       <div className="space-y-6">
         <Welcome />

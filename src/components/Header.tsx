@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "../context/AuthContext";
 import {
   ArrowRight,
   Sparkles,
@@ -126,6 +127,8 @@ export default function Landing() {
 }
 
 function Nav() {
+  const { user } = useAuth();
+
   return (
     <header className="fixed top-0 inset-x-0 z-50 glass-strong border-x-0 border-t-0 border-b border-border/15 shadow-soft">
       <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 py-3.5 md:py-4">
@@ -148,10 +151,21 @@ function Nav() {
 
         {/* Right: Actions */}
         <div className="flex-1 flex justify-end items-center gap-3">
-          <Link to="/candidates/signin" className="hidden sm:inline-flex items-center justify-center text-sm font-semibold h-11 px-5 rounded-lg hover:bg-accent transition-colors">Sign in</Link>
-          <Link to="/candidates/signup" className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-6 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity">
-            Get started <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          {user ? (
+            <Link
+              to={user.role === "candidate" ? "/candidates/dashboard" : "/employers/dashboard"}
+              className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-5 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity"
+            >
+              Go to Dashboard <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          ) : (
+            <>
+              <Link to="/candidate/login" className="hidden sm:inline-flex items-center justify-center text-sm font-semibold h-11 px-5 rounded-lg hover:bg-accent transition-colors">Sign in</Link>
+              <Link to="/candidate/register" className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-6 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity">
+                Get started <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
@@ -211,7 +225,7 @@ function Hero() {
               variants={fadeUp}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
-              <Link to="/signup" className="group inline-flex items-center gap-2.5 px-7 py-4 md:px-[2.25rem] md:py-[1.125rem] rounded-xl bg-foreground text-background font-semibold text-base md:text-[1.05rem] shadow-elegant hover:shadow-glow transition-all">
+              <Link to="/company/register" className="group inline-flex items-center gap-2.5 px-7 py-4 md:px-[2.25rem] md:py-[1.125rem] rounded-xl bg-foreground text-background font-semibold text-base md:text-[1.05rem] shadow-elegant hover:shadow-glow transition-all">
                 I'm hiring for EU roles
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
@@ -420,7 +434,7 @@ function CTA() {
                 <Link to="/jobs" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-background text-foreground font-medium hover:opacity-90 transition">
                   Browse European jobs <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link to="/signup" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-background/30 text-background hover:bg-background/10 transition">
+                <Link to="/company/register" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-background/30 text-background hover:bg-background/10 transition">
                   Hire global talent for EU
                 </Link>
               </div>

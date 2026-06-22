@@ -88,6 +88,8 @@ export const EMPLOYER_NAV: NavGroup[] = [
   },
 ];
 
+import { useAuth } from "@/context/AuthContext";
+
 export function DashboardShell({
   nav,
   user,
@@ -100,6 +102,7 @@ export function DashboardShell({
   children: ReactNode;
 }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { logout } = useAuth();
 
   return (
     <div className="min-h-dvh grid lg:grid-cols-[260px_1fr] bg-secondary/40">
@@ -165,6 +168,7 @@ export function DashboardShell({
           </div>
           <Link
             to="/"
+            onClick={logout}
             className="mt-1 flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-lg"
           >
             <LogOut className="h-4 w-4" /> Sign out

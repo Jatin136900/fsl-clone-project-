@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { MOCK_JOBS, COUNTRIES, CATEGORIES, MODES, type Job } from "@/data/jobs";
 import { Search, MapPin, Briefcase, Calendar, ShieldCheck, ArrowRight, Bookmark, Sparkles, SlidersHorizontal } from "lucide-react";
 
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/jobs")({
 });
 
 function JobsPage() {
+  const { user } = useAuth();
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("All");
   const [category, setCategory] = useState("All");
@@ -42,10 +44,21 @@ function JobsPage() {
             <span className="font-display text-lg">WorkInEurope</span>
           </Link>
           <div className="flex items-center gap-2 text-sm">
-            <Link to="/candidates/signin" className="px-3 py-2 hover:bg-accent rounded-lg">Sign in</Link>
-            <Link to="/candidates/signup" className="px-4 py-2 bg-foreground text-background rounded-lg font-medium">
-              Create profile
-            </Link>
+            {user ? (
+              <Link
+                to={user.role === "candidate" ? "/candidates/dashboard" : "/employers/dashboard"}
+                className="px-4 py-2 bg-foreground text-background rounded-lg font-medium"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link to="/candidate/login" className="px-3 py-2 hover:bg-accent rounded-lg">Sign in</Link>
+                <Link to="/candidate/register" className="px-4 py-2 bg-foreground text-background rounded-lg font-medium">
+                  Create profile
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -175,7 +188,7 @@ function JobCard({ job }: { job: Job }) {
               <button className="h-9 w-9 rounded-lg hover:bg-accent grid place-items-center" aria-label="Save job">
                 <Bookmark className="h-4 w-4" />
               </button>
-              <Link to="/candidates/signup" className="inline-flex items-center gap-1.5 px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-90">
+              <Link to={user ? "/candidates/dashboard" : "/candidate/register"} className="inline-flex items-center gap-1.5 px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-90">
                 Apply <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
