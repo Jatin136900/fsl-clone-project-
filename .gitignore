@@ -30,3 +30,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build outputs and caching directories
+.vercel
+.vercel/
+.vinxi/
+.output/
+.nitro/
+.tanstack/
+

@@ -14,6 +14,10 @@ import {
   TrendingUp,
   MapPin,
   Globe2,
+  Plane,
+  UserCheck,
+  Video,
+  FileCheck,
 } from "lucide-react";
 
 import type { Variants } from "framer-motion";
@@ -38,12 +42,6 @@ const countries = [
   { flag: "🇵🇱", name: "Poland", jobs: "1.9k" },
 ];
 
-const steps = [
-  { title: "Build a video profile", body: "AI guides you to record a 60-second pitch, verify your skills, and upload your resume." },
-  { title: "Get matched with EU employers", body: "Our matching engine scores fit across qualifications, language, and visa requirements." },
-  { title: "Interview on platform", body: "Conduct secure, automated video screens or live calls with auto-translation features." },
-  { title: "Relocate & onboard", body: "Get full support with contracts, paperwork, local compliance, and EU visa sponsorship." },
-];
 
 const testimonials = [
   {
@@ -71,11 +69,12 @@ const testimonials = [
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground font-sans antialiased">
       <Nav />
       <Hero />
-      <HowItWorks />
+      <GlobalCareerJourney />
       <Countries />
+      <SuccessStoriesMap />
       <Testimonials />
       <CTA />
       <Footer />
@@ -85,23 +84,29 @@ export default function Landing() {
 
 function Nav() {
   return (
-    <header className="fixed top-0 inset-x-0 z-50 px-4 pt-4">
-      <div className="mx-auto max-w-7xl glass-strong rounded-2xl shadow-soft flex items-center justify-between px-5 py-3">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="relative h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
-            <Sparkles className="h-4 w-4 text-brand-foreground" />
-          </div>
-          <span className="font-display text-xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
-        </Link>
-        <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
+    <header className="fixed top-0 inset-x-0 z-50 glass-strong border-x-0 border-t-0 border-b border-border/15 shadow-soft">
+      <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 py-3.5 md:py-4">
+        {/* Left: Logo */}
+        <div className="flex-1 flex justify-start">
+          <Link to="/" className="flex items-center gap-2.5">
+            <div className="relative h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
+              <Sparkles className="h-4 w-4 text-brand-foreground" />
+            </div>
+            <span className="font-display text-xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
+          </Link>
+        </div>
+
+        {/* Center: Navigation links */}
+        <nav className="hidden md:flex items-center gap-8 text-base font-medium text-muted-foreground">
           <Link to="/jobs" className="hover:text-foreground transition-colors">Jobs</Link>
-          <a href="#how" className="hover:text-foreground transition-colors">How it works</a>
           <a href="#countries" className="hover:text-foreground transition-colors">Destinations</a>
           <a href="#testimonials" className="hover:text-foreground transition-colors">Success Stories</a>
         </nav>
-        <div className="flex items-center gap-2">
-          <Link to="/candidates/signin" className="hidden sm:inline-flex text-sm px-4 py-2 rounded-lg hover:bg-accent transition-colors">Sign in</Link>
-          <Link to="/candidates/signup" className="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity">
+
+        {/* Right: Actions */}
+        <div className="flex-1 flex justify-end items-center gap-3">
+          <Link to="/candidates/signin" className="hidden sm:inline-flex items-center justify-center text-sm font-semibold h-11 px-5 rounded-lg hover:bg-accent transition-colors">Sign in</Link>
+          <Link to="/candidates/signup" className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-6 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity">
             Get started <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -153,8 +158,7 @@ function Hero() {
               variants={fadeUp}
               className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed"
             >
-              WorkInEurope connects international professionals with verified European employers. 
-              Find visa-sponsored roles, showcase your skills on video, and streamline your relocation process in days.
+              WorkInEurope connects skilled professionals with verified European employers. Find visa-sponsored jobs and start your relocation journey with confidence.
             </motion.p>
 
             <motion.div
@@ -305,46 +309,6 @@ function HeroVisual() {
         </motion.div>
       </div>
     </motion.div>
-  );
-}
-
-function HowItWorks() {
-  return (
-    <section id="how" className="py-20 md:py-28 bg-secondary/40">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="max-w-xl">
-            <div className="text-xs uppercase tracking-[0.2em] text-brand font-semibold">How it works</div>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.05]">
-              Simplifying the relocation journey.
-            </h2>
-          </div>
-          <p className="text-muted-foreground md:max-w-sm">
-            A secure, end-to-end recruitment process designed to guide you step-by-step from your first video pitch to your EU visa stamp.
-          </p>
-        </div>
-
-        <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {steps.map((s, i) => (
-            <motion.li
-              key={s.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="relative rounded-2xl p-7 bg-card border border-border shadow-soft"
-            >
-              <div className="font-display text-5xl text-gradient-brand leading-none">0{i + 1}</div>
-              <h3 className="mt-5 font-semibold text-lg">{s.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.body}</p>
-              {i < steps.length - 1 && (
-                <ArrowRight className="hidden lg:block absolute -right-3 top-9 h-5 w-5 text-muted-foreground/40" />
-              )}
-            </motion.li>
-          ))}
-        </ol>
-      </div>
-    </section>
   );
 }
 
@@ -505,5 +469,214 @@ function Footer() {
         <div>© {new Date().getFullYear()} WorkInEurope · Your European career starts here.</div>
       </div>
     </footer>
+  );
+}
+
+function GlobalCareerJourney() {
+  const journeySteps = [
+    {
+      num: "01",
+      title: "Create Profile",
+      desc: "Build a digital resume with AI-verified degrees and skills certifications.",
+      icon: UserCheck,
+    },
+    {
+      num: "02",
+      title: "Upload Skill Video",
+      desc: "Record a short pitch showcasing your technical skills and speaking ability.",
+      icon: PlayCircle,
+    },
+    {
+      num: "03",
+      title: "Get Interviewed",
+      desc: "Connect directly via secure on-platform calls with real-time translation.",
+      icon: Video,
+    },
+    {
+      num: "04",
+      title: "Receive Offer",
+      desc: "Lock in visa-sponsored employment contracts under EU labor standards.",
+      icon: FileCheck,
+    },
+    {
+      num: "05",
+      title: "Relocate Abroad",
+      desc: "Get full relocation support, flights, housing, and work visa compliance.",
+      icon: Plane,
+    },
+  ];
+
+  return (
+    <section className="relative py-24 overflow-hidden bg-background">
+      {/* Cinematic background overlay */}
+      <div className="absolute right-0 bottom-0 top-0 w-1/3 opacity-15 pointer-events-none hidden lg:block">
+        <img
+          src="/images/career_journey_visual.png"
+          alt="Career Journey"
+          className="h-full w-full object-cover"
+          style={{
+            maskImage: "linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%)",
+            WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%)",
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="max-w-2xl mb-16">
+          <span className="text-xs uppercase tracking-[0.2em] text-brand font-semibold">Your Roadmap</span>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-tight">
+            The Global Career Journey.
+          </h2>
+          <p className="mt-4 text-muted-foreground text-lg">
+            A transparent, step-by-step relocation pipeline designed to match your skills with trusted employers.
+          </p>
+        </div>
+
+        <div className="relative">
+          {/* Timeline connection line for desktop */}
+          <div className="absolute top-[32px] left-[10%] right-[10%] h-0.5 bg-border/40 hidden md:block" />
+
+          <div className="grid md:grid-cols-5 gap-8 relative z-10">
+            {journeySteps.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <motion.div
+                  key={step.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="group flex flex-col items-center md:items-start text-center md:text-left relative"
+                >
+                  {/* Node circle */}
+                  <div className="relative flex items-center justify-center h-16 w-16 rounded-2xl glass-strong shadow-soft border border-border group-hover:border-brand/40 group-hover:shadow-glow transition-all duration-300 mb-6 bg-card">
+                    <Icon className="h-6 w-6 text-brand" />
+                    <span className="absolute -top-2 -right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[image:var(--gradient-brand)] text-brand-foreground shadow-soft">
+                      {step.num}
+                    </span>
+                  </div>
+
+                  <h3 className="font-semibold text-lg group-hover:text-brand transition-colors duration-200">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2.5 text-sm text-muted-foreground leading-relaxed max-w-xs md:max-w-none">
+                    {step.desc}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SuccessStoriesMap() {
+  const markers = [
+    { city: "Berlin, DE", lat: "45%", lon: "52%", relocations: "1,240+ hires" },
+    { city: "Amsterdam, NL", lat: "41%", lon: "47%", relocations: "980+ hires" },
+    { city: "Dublin, IE", lat: "36%", lon: "38%", relocations: "740+ hires" },
+    { city: "Paris, FR", lat: "48%", lon: "45%", relocations: "850+ hires" },
+    { city: "Warsaw, PL", lat: "43%", lon: "58%", relocations: "520+ hires" },
+  ];
+
+  const stats = [
+    { value: "8,400+", label: "Candidates Relocated" },
+    { value: "1,600+", label: "Verified Employers" },
+    { value: "96.4%", label: "Visa Success Rate" },
+    { value: "14 Days", label: "Avg. Relocation Time" },
+  ];
+
+  return (
+    <section className="relative py-24 overflow-hidden text-white">
+      {/* Full-width premium background image with overlays */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/images/global_workers_background.png"
+          alt="Global Workers"
+          className="h-full w-full object-cover"
+        />
+        {/* Deep blue brand gradient overlay for readability and premium look */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.13_0.02_260)] via-[oklch(0.13_0.02_260/0.95)] to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.13_0.02_260)] via-transparent to-transparent" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Column: Info & Stats */}
+          <div>
+            <span className="text-xs uppercase tracking-[0.2em] text-brand-glow font-semibold">Global Network</span>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-tight">
+              Success Stories Around the World.
+            </h2>
+            <p className="mt-4 text-white/70 text-lg leading-relaxed max-w-xl">
+              Connecting skilled labor from all corners of the world to premium European enterprises. We verify credentials, manage compliance, and support relocation.
+            </p>
+
+            <div className="mt-12 grid grid-cols-2 gap-6">
+              {stats.map((s, i) => (
+                <motion.div
+                  key={s.label}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 hover:shadow-glow"
+                >
+                  <div className="font-display text-3xl md:text-4xl font-semibold text-brand-glow">
+                    {s.value}
+                  </div>
+                  <div className="text-xs text-white/60 mt-1 uppercase tracking-wider">
+                    {s.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Map Mockup */}
+          <div className="relative h-[350px] sm:h-[450px] w-full bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden shadow-elegant">
+            {/* World/Europe Map SVG Background */}
+            <svg
+              viewBox="0 0 1000 600"
+              className="absolute inset-0 h-full w-full opacity-20 text-white fill-current"
+            >
+              {/* Simplified outline of Europe/World map */}
+              <path d="M150,150 Q180,120 220,160 T300,140 T380,200 T420,180 T500,260 T600,200 T700,240 T800,180 T900,220 L950,500 L50,500 Z" />
+              <path d="M250,220 Q280,180 320,240 T400,200 T480,280 T520,250 T600,320 T700,260 T800,300 T900,240 L900,450 L100,450 Z" />
+            </svg>
+
+            {/* Animated Map Pins */}
+            {markers.map((marker, i) => (
+              <div
+                key={marker.city}
+                className="absolute group cursor-pointer"
+                style={{ top: marker.lat, left: marker.lon }}
+              >
+                <div className="relative">
+                  {/* Ring animation */}
+                  <span className="absolute -inset-2.5 rounded-full bg-brand-glow/40 animate-pulse-ring" />
+                  {/* Core pin */}
+                  <div className="h-3 w-3 rounded-full bg-brand-glow border-2 border-white shadow-soft relative z-10" />
+                </div>
+
+                {/* Tooltip on hover */}
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 scale-0 group-hover:scale-100 transition-all origin-bottom bg-foreground text-background text-[10px] rounded-lg p-2 shadow-elegant z-20 pointer-events-none text-center">
+                  <div className="font-semibold">{marker.city}</div>
+                  <div className="text-[9px] opacity-80 mt-0.5">{marker.relocations}</div>
+                </div>
+              </div>
+            ))}
+
+            {/* Decorative Compass / Grid lines */}
+            <div className="absolute right-6 bottom-6 flex items-center gap-2 text-white/40 text-[10px]">
+              <Globe2 className="h-4 w-4 animate-pulse" />
+              <span>ACTIVE CHANNELS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
