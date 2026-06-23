@@ -139,6 +139,7 @@ function CompanyRegister() {
 
   return (
     <AuthShell
+      wide
       side="employer"
       title="Create your company account"
       subtitle="Post unlimited roles and search video-verified talent in Europe."
@@ -151,11 +152,11 @@ function CompanyRegister() {
         </>
       }
     >
-      <div className="grid grid-cols-3 gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         {["Unlimited jobs", "AI matching", "Video screening"].map((p) => (
-          <div key={p} className="flex items-center gap-1.5 text-xs px-2.5 py-2 rounded-lg bg-secondary/50 border border-border/10">
+          <div key={p} className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg bg-secondary/50 border border-border/10">
             <CheckCircle2 className="h-3 w-3 text-success shrink-0" />
-            <span className="truncate text-muted-foreground font-medium">{p}</span>
+            <span className="text-muted-foreground font-medium">{p}</span>
           </div>
         ))}
       </div>
@@ -172,8 +173,8 @@ function CompanyRegister() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 [&>*]:min-w-0">
+          <div className="sm:col-span-2">
             <Field label="Company Name">
               <Input
                 required
@@ -256,7 +257,7 @@ function CompanyRegister() {
             />
           </Field>
 
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <Field label="Password" hint="8 characters minimum">
               <PasswordInput
                 required

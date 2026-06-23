@@ -56,12 +56,12 @@ export function SearchableSelect({
           setIsOpen(!isOpen);
           setSearchQuery("");
         }}
-        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl bg-card border text-left outline-none transition select-none
+        className={`w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl bg-card border text-left outline-none transition select-none min-w-0
           ${error ? "border-destructive/50 focus:ring-destructive/10" : "border-border focus:border-foreground/30 focus:ring-4 focus:ring-foreground/5"}
           ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
         `}
       >
-        <span className={`block truncate ${!selectedOption ? "text-muted-foreground" : "text-foreground"}`}>
+        <span className={`block truncate min-w-0 flex-1 ${!selectedOption ? "text-muted-foreground" : "text-foreground"}`}>
           {selectedOption ? (
             <span className="flex items-center gap-2">
               {selectedOption.flag && <span>{selectedOption.flag}</span>}
@@ -71,7 +71,7 @@ export function SearchableSelect({
             placeholder
           )}
         </span>
-        <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (

@@ -21,6 +21,7 @@ function JobsPage() {
   const [category, setCategory] = useState("All");
   const [mode, setMode] = useState("All");
   const [visaOnly, setVisaOnly] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filtered = useMemo(() => {
     return MOCK_JOBS.filter((j) => {
@@ -89,16 +90,27 @@ function JobsPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-6 py-10 grid lg:grid-cols-[260px_1fr] gap-8">
-        <aside className="space-y-6 lg:sticky lg:top-24 self-start">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 grid lg:grid-cols-[260px_1fr] gap-8">
+        <div className="lg:hidden">
+          <button 
+            type="button"
+            onClick={() => setShowMobileFilters(!showMobileFilters)}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-card border border-border rounded-xl text-sm font-semibold select-none cursor-pointer"
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+            {showMobileFilters ? "Hide Filters" : "Show Filters"}
+          </button>
+        </div>
+
+        <aside className={`${showMobileFilters ? "block animate-in fade-in slide-in-from-top-2 duration-200" : "hidden"} lg:block space-y-6 lg:sticky lg:top-24 self-start`}>
           <FilterPanel label="Category" options={CATEGORIES} value={category} onChange={setCategory} />
           <FilterPanel label="Work mode" options={MODES} value={mode} onChange={setMode} />
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
               <SlidersHorizontal className="h-3.5 w-3.5" /> More
             </div>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={visaOnly} onChange={(e) => setVisaOnly(e.target.checked)} />
+            <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+              <input type="checkbox" checked={visaOnly} onChange={(e) => setVisaOnly(e.target.checked)} className="rounded border-border text-foreground focus:ring-foreground/5" />
               Visa sponsorship only
             </label>
           </div>
@@ -152,29 +164,30 @@ function FilterPanel({ label, options, value, onChange }: { label: string; optio
 }
 
 function JobCard({ job }: { job: Job }) {
+  const { user } = useAuth();
   return (
-    <div className="group relative rounded-2xl bg-card border border-border p-5 hover:shadow-elegant hover:border-foreground/15 transition-all">
-      <div className="flex items-start gap-4">
-        <div className="text-4xl">{job.flag}</div>
+    <div className="group relative rounded-2xl bg-card border border-border p-4 sm:p-5 hover:shadow-elegant hover:border-foreground/15 transition-all">
+      <div className="flex items-start gap-3 sm:gap-4">
+        <div className="text-3xl sm:text-4xl shrink-0">{job.flag}</div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div>
-              <h3 className="font-semibold text-lg">{job.title}</h3>
-              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+              <h3 className="font-semibold text-base sm:text-lg">{job.title}</h3>
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-muted-foreground">
                 <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {job.country}</span>
                 <span className="inline-flex items-center gap-1"><Briefcase className="h-3.5 w-3.5" /> {job.mode}</span>
                 <span className="inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {new Date(job.postedAt).toLocaleDateString()}</span>
               </div>
             </div>
-            <div className="text-right shrink-0">
-              <div className="font-display text-2xl tracking-tight">
+            <div className="text-left sm:text-right shrink-0">
+              <div className="font-display text-xl sm:text-2xl tracking-tight">
                 {job.salary.toLocaleString()} <span className="text-sm text-muted-foreground">{job.currency}</span>
               </div>
               <div className="text-xs text-muted-foreground">/ {job.period.toLowerCase()}</div>
             </div>
           </div>
-          <p className="mt-3 text-sm text-muted-foreground line-clamp-2">{job.description}</p>
-          <div className="mt-4 flex items-center justify-between">
+          <p className="mt-3 text-xs sm:text-sm text-muted-foreground line-clamp-2">{job.description}</p>
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex flex-wrap gap-1.5">
               <Chip>{job.category}</Chip>
               <Chip>{job.experience}</Chip>
@@ -184,11 +197,11 @@ function JobCard({ job }: { job: Job }) {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center justify-between sm:justify-end gap-1.5 w-full sm:w-auto">
               <button className="h-9 w-9 rounded-lg hover:bg-accent grid place-items-center" aria-label="Save job">
                 <Bookmark className="h-4 w-4" />
               </button>
-              <Link to={user ? "/candidates/dashboard" : "/candidate/register"} className="inline-flex items-center gap-1.5 px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-90">
+              <Link to={user ? "/candidates/dashboard" : "/candidate/register"} className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-90">
                 Apply <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

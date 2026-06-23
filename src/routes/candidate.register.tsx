@@ -131,6 +131,7 @@ function CandidateRegister() {
 
   return (
     <AuthShell
+      wide
       title="Create your account"
       subtitle="Start your European career journey in under 2 minutes."
       footer={
@@ -154,8 +155,8 @@ function CandidateRegister() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 [&>*]:min-w-0">
+          <div className="sm:col-span-2">
             <Field label="Full Name">
               <Input
                 required
@@ -195,7 +196,7 @@ function CandidateRegister() {
             {errors.phoneNumber && <div className="mt-1 text-xs text-destructive">{errors.phoneNumber}</div>}
           </Field>
 
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <Field label="Password" hint="8 characters minimum">
               <PasswordInput
                 required
@@ -253,7 +254,7 @@ function CandidateRegister() {
             />
           </Field>
 
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <Field label="Skills" hint="Comma-separated skills">
               <Input
                 required

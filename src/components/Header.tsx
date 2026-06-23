@@ -20,6 +20,8 @@ import {
   UserCheck,
   Video,
   FileCheck,
+  Menu,
+  X,
 } from "lucide-react";
 
 import type { Variants } from "framer-motion";
@@ -128,6 +130,7 @@ export default function Landing() {
 
 function Nav() {
   const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 glass-strong border-x-0 border-t-0 border-b border-border/15 shadow-soft">
@@ -151,23 +154,99 @@ function Nav() {
 
         {/* Right: Actions */}
         <div className="flex-1 flex justify-end items-center gap-3">
-          {user ? (
-            <Link
-              to={user.role === "candidate" ? "/candidates/dashboard" : "/employers/dashboard"}
-              className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-5 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity"
-            >
-              Go to Dashboard <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          ) : (
-            <>
-              <Link to="/candidate/login" className="hidden sm:inline-flex items-center justify-center text-sm font-semibold h-11 px-5 rounded-lg hover:bg-accent transition-colors">Sign in</Link>
-              <Link to="/candidate/register" className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-6 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity">
-                Get started <ArrowRight className="h-3.5 w-3.5" />
+          <div className="hidden md:flex items-center gap-3">
+            {user ? (
+              <Link
+                to={user.role === "candidate" ? "/candidates/dashboard" : "/employers/dashboard"}
+                className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-5 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity"
+              >
+                Go to Dashboard <ArrowRight className="h-3.5 w-3.5" />
               </Link>
-            </>
-          )}
+            ) : (
+              <>
+                <Link to="/candidate/login" className="inline-flex items-center justify-center text-sm font-semibold h-11 px-5 rounded-lg hover:bg-accent transition-colors">Sign in</Link>
+                <Link to="/candidate/register" className="inline-flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-6 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity">
+                  Get started <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </>
+            )}
+          </div>
+
+          {/* Hamburger toggle button (visible on mobile/tablet) */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors outline-none"
+            aria-label="Toggle Navigation"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile drawer menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden border-t border-border bg-card/98 backdrop-blur-lg overflow-hidden shadow-elegant"
+          >
+            <div className="px-5 py-6 flex flex-col gap-4">
+              <Link 
+                to="/jobs" 
+                onClick={() => setIsOpen(false)}
+                className="text-base font-semibold text-muted-foreground hover:text-foreground py-2 border-b border-border/40 transition-colors"
+              >
+                Jobs
+              </Link>
+              <a 
+                href="#countries" 
+                onClick={() => setIsOpen(false)}
+                className="text-base font-semibold text-muted-foreground hover:text-foreground py-2 border-b border-border/40 transition-colors"
+              >
+                Destinations
+              </a>
+              <a 
+                href="#testimonials" 
+                onClick={() => setIsOpen(false)}
+                className="text-base font-semibold text-muted-foreground hover:text-foreground py-2 border-b border-border/40 transition-colors"
+              >
+                Success Stories
+              </a>
+              <div className="flex flex-col gap-3.5 pt-4">
+                {user ? (
+                  <Link
+                    to={user.role === "candidate" ? "/candidates/dashboard" : "/employers/dashboard"}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-5 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity"
+                  >
+                    Go to Dashboard <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                ) : (
+                  <>
+                    <Link 
+                      to="/candidate/login" 
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center text-sm font-semibold h-11 px-5 rounded-lg border border-border hover:bg-accent transition-colors"
+                    >
+                      Sign in
+                    </Link>
+                    <Link 
+                      to="/candidate/register" 
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center gap-1.5 text-sm font-semibold h-11 px-6 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity"
+                    >
+                      Get started <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
@@ -372,7 +451,7 @@ function Countries() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {countries.map((c, i) => (
             <motion.div
               key={c.name}
@@ -382,7 +461,7 @@ function Countries() {
               transition={{ delay: i * 0.05 }}
               className="group relative rounded-2xl p-6 bg-card border border-border hover:border-brand/30 hover:shadow-elegant transition-all duration-300 cursor-pointer overflow-hidden"
             >
-              <div className="relative z-10 max-w-[calc(100%-80px)]">
+              <div className="relative z-10 max-w-[calc(100%-72px)] sm:max-w-[calc(100%-88px)]">
                 <div className="inline-flex items-center justify-center px-2 py-1 rounded-md bg-secondary text-xs font-semibold text-muted-foreground tracking-wider mb-3">
                   {getCountryCode(c.name)}
                 </div>
@@ -395,7 +474,7 @@ function Countries() {
               <img
                 src={getCountryFlagUrl(c.name)}
                 alt={`${c.name} Flag`}
-                className="absolute right-0 bottom-0 w-24 h-16 object-cover rounded-tl-xl border-t border-l border-border/20 shadow-soft pointer-events-none group-hover:scale-110 transition-all duration-500 z-20 opacity-100 filter-none"
+                className="absolute right-0 bottom-0 w-20 h-14 sm:w-24 sm:h-16 object-cover rounded-tl-xl border-t border-l border-border/20 shadow-soft pointer-events-none group-hover:scale-110 transition-all duration-500 z-20 opacity-100 filter-none"
               />
 
               <ArrowRight className="absolute top-6 right-6 h-4 w-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all z-30" />
@@ -491,20 +570,20 @@ function CTA() {
 function Footer() {
   return (
     <footer className="border-t border-border py-12">
-      <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
+      <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground text-center md:text-left">
+        <div className="flex items-center gap-2 justify-center md:justify-start">
           <div className="h-7 w-7 rounded-md bg-[image:var(--gradient-brand)] grid place-items-center">
             <Sparkles className="h-3.5 w-3.5 text-brand-foreground" />
           </div>
           <span className="font-display text-lg text-foreground">WorkInEurope</span>
         </div>
-        <div className="flex gap-6">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
           <a className="hover:text-foreground cursor-pointer">Privacy Policy</a>
           <a className="hover:text-foreground cursor-pointer">Terms of Service</a>
           <a className="hover:text-foreground cursor-pointer">Relocation Guide</a>
           <a className="hover:text-foreground cursor-pointer">Contact Support</a>
         </div>
-        <div>© {new Date().getFullYear()} WorkInEurope · Your European career starts here.</div>
+        <div className="text-muted-foreground/80">© {new Date().getFullYear()} WorkInEurope · Your European career starts here.</div>
       </div>
     </footer>
   );
@@ -759,7 +838,7 @@ function SuccessStoriesMap() {
               Connecting skilled labor from all corners of the world to premium European enterprises. We verify credentials, manage compliance, and support relocation.
             </p>
 
-            <div className="mt-12 grid grid-cols-2 gap-6">
+            <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6">
               {stats.map((s, i) => (
                 <motion.div
                   key={s.label}
@@ -767,9 +846,9 @@ function SuccessStoriesMap() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 hover:shadow-glow"
+                  className="bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 hover:shadow-glow"
                 >
-                  <div className="font-display text-3xl md:text-4xl font-semibold text-brand-glow">
+                  <div className="font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-brand-glow">
                     <AnimatedCounter
                       value={s.numValue}
                       suffix={s.suffix}
@@ -777,7 +856,7 @@ function SuccessStoriesMap() {
                       delay={i * 0.1}
                     />
                   </div>
-                  <div className="text-xs text-white/60 mt-1 uppercase tracking-wider">
+                  <div className="text-[10px] sm:text-xs text-white/60 mt-1 uppercase tracking-wider">
                     {s.label}
                   </div>
                 </motion.div>

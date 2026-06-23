@@ -8,12 +8,14 @@ export function AuthShell({
   children,
   footer,
   side,
+  wide,
 }: {
   title: string;
   subtitle?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
   side?: "candidate" | "employer";
+  wide?: boolean;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -29,7 +31,7 @@ export function AuthShell({
   const companyPath = `/company/${currentAction}`;
 
   return (
-    <div className="min-h-dvh grid lg:grid-cols-2 bg-background">
+    <div className="min-h-dvh grid lg:grid-cols-2 bg-background overflow-x-hidden">
       <div className="relative hidden lg:block overflow-hidden bg-foreground text-background">
         <div className="absolute inset-0 bg-[image:var(--gradient-mesh)] opacity-30" />
         <div
@@ -79,28 +81,32 @@ export function AuthShell({
         </div>
       </div>
 
-      <div className="relative flex flex-col">
-        <div className="flex items-center justify-between p-6">
+      <div className="relative flex flex-col min-h-dvh lg:min-h-0 overflow-y-auto">
+        <div className="flex items-center justify-between shrink-0 p-4 sm:p-6">
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" /> Back to home
+            <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to home
           </Link>
-          <Link to="/" className="lg:hidden inline-flex items-center gap-2">
-            <div className="h-7 w-7 rounded-md bg-[image:var(--gradient-brand)] grid place-items-center">
-              <Sparkles className="h-3.5 w-3.5 text-brand-foreground" />
+          <Link to="/" className="lg:hidden inline-flex items-center gap-1.5 sm:gap-2">
+            <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-md bg-[image:var(--gradient-brand)] grid place-items-center">
+              <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-brand-foreground" />
             </div>
-            <span className="font-display">WorkInEurope</span>
+            <span className="font-display text-sm sm:text-base">WorkInEurope</span>
           </Link>
         </div>
-        <div className="flex-1 grid place-items-center px-6 py-10">
-          <div className="w-full max-w-md">
+        <div
+          className={`flex-1 flex justify-center px-4 pb-8 sm:px-6 sm:pb-10 ${
+            wide ? "items-start pt-2 sm:pt-4" : "items-center py-8 sm:py-10"
+          }`}
+        >
+          <div className={`w-full min-w-0 ${wide ? "max-w-2xl" : "max-w-md"}`}>
             {/* Tabs */}
-            <div className="flex rounded-xl bg-secondary/50 p-1.5 mb-8 border border-border/20">
+            <div className="flex rounded-xl bg-secondary/50 p-1 sm:p-1.5 mb-6 sm:mb-8 border border-border/20">
               <Link
                 to={candidatePath}
-                className={`flex-1 text-center py-2.5 rounded-lg text-sm font-semibold transition-all select-none
+                className={`flex-1 text-center py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all select-none
                   ${isCandidate
                     ? "bg-card text-foreground shadow-elegant border border-border/10"
                     : "text-muted-foreground hover:text-foreground"
@@ -111,7 +117,7 @@ export function AuthShell({
               </Link>
               <Link
                 to={companyPath}
-                className={`flex-1 text-center py-2.5 rounded-lg text-sm font-semibold transition-all select-none
+                className={`flex-1 text-center py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all select-none
                   ${isCompany
                     ? "bg-card text-foreground shadow-elegant border border-border/10"
                     : "text-muted-foreground hover:text-foreground"
@@ -122,9 +128,17 @@ export function AuthShell({
               </Link>
             </div>
 
-            <h1 className="font-display text-4xl tracking-tight leading-tight">{title}</h1>
-            {subtitle && <p className="mt-2 text-muted-foreground">{subtitle}</p>}
-            <div className="mt-8">{children}</div>
+            <h1
+              className={`font-display tracking-tight leading-tight ${
+                wide ? "text-2xl sm:text-3xl lg:text-4xl" : "text-3xl sm:text-4xl"
+              }`}
+            >
+              {title}
+            </h1>
+            {subtitle && (
+              <p className="mt-2 text-sm sm:text-base text-muted-foreground">{subtitle}</p>
+            )}
+            <div className="mt-6 sm:mt-8">{children}</div>
             {footer && <div className="mt-6 text-sm text-muted-foreground">{footer}</div>}
           </div>
         </div>

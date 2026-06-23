@@ -140,33 +140,39 @@ function CandidateFeed() {
       </div>
       <div className="divide-y divide-border">
         {candidates.map((c) => (
-          <div key={c.name} className="p-5 flex items-center gap-4 hover:bg-accent/40 transition-colors">
-            <div className="relative h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-[oklch(0.62_0.19_256)] to-[oklch(0.75_0.17_200)] grid place-items-center text-white font-semibold">
-              {c.name.split(" ").map((s) => s[0]).join("")}
-              <span className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-card grid place-items-center">
-                <PlayCircle className="h-4 w-4" />
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-medium truncate">{c.name}</span>
-                <span className="inline-flex items-center gap-1 text-[10px] text-success font-semibold">
-                  <ShieldCheck className="h-3 w-3" /> {c.trust}
+          <div key={c.name} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-accent/40 transition-colors">
+            <div className="flex items-center gap-4 min-w-0">
+              <div className="relative h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-[oklch(0.62_0.19_256)] to-[oklch(0.75_0.17_200)] grid place-items-center text-white font-semibold">
+                {c.name.split(" ").map((s) => s[0]).join("")}
+                <span className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-card grid place-items-center">
+                  <PlayCircle className="h-4 w-4" />
                 </span>
               </div>
-              <div className="text-xs text-muted-foreground truncate flex items-center gap-2">
-                <span>{c.role}</span>
-                <span className="inline-flex items-center gap-0.5"><MapPin className="h-3 w-3" />{c.country}</span>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium truncate">{c.name}</span>
+                  <span className="inline-flex items-center gap-1 text-[10px] text-success font-semibold shrink-0">
+                    <ShieldCheck className="h-3 w-3" /> {c.trust}
+                  </span>
+                </div>
+                <div className="text-xs text-muted-foreground truncate flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                  <span>{c.role}</span>
+                  <span className="inline-flex items-center gap-0.5"><MapPin className="h-3 w-3" />{c.country}</span>
+                </div>
               </div>
             </div>
-            <div className="text-right">
-              <div className="font-display text-xl text-gradient-brand leading-none">{c.match}%</div>
-              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">match</div>
+            <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto border-t border-border/10 sm:border-none pt-3 sm:pt-0 shrink-0">
+              <div className="text-left sm:text-right">
+                <div className="font-display text-xl text-gradient-brand leading-none">{c.match}%</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">match</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge>{c.stage}</Badge>
+                <button className="h-9 w-9 rounded-lg hover:bg-accent grid place-items-center" aria-label="More">
+                  <MoreHorizontal className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-            <Badge>{c.stage}</Badge>
-            <button className="h-9 w-9 rounded-lg hover:bg-accent grid place-items-center" aria-label="More">
-              <MoreHorizontal className="h-4 w-4" />
-            </button>
           </div>
         ))}
       </div>
