@@ -38,7 +38,7 @@ function JobsPage() {
   return (
     <div className="min-h-dvh bg-background">
       <header className="border-b border-border sticky top-0 z-30 glass-strong">
-        <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
+        <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 md:py-2">
           <Link to="/" className="flex items-center">
             <img src={logo} alt="WorkInEurope" className="w-[110px] h-auto object-contain" />
           </Link>

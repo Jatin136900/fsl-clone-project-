@@ -45,8 +45,8 @@ export function AuthShell({
         />
         <div className="relative h-full flex flex-col p-12 justify-between">
           <Link to="/" className="inline-flex items-center gap-4 w-fit">
-            <img src={logo} alt="WorkInEurope" className="h-20 w-20 rounded-2xl object-contain bg-white/10 p-2" />
-            <span className="font-display text-3xl font-bold tracking-tight">WorkInEurope</span>
+            <img src={logo} alt="WorkInEurope" className="w-[110px] h-auto object-contain" />
+            {/* <span className="font-display text-3xl font-bold tracking-tight">WorkInEurope</span> */}
           </Link>
           <div className="max-w-md">
             <div className="text-xs uppercase tracking-[0.25em] text-background/60 mb-4">
@@ -89,8 +89,8 @@ export function AuthShell({
             <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to home
           </Link>
           <Link to="/" className="lg:hidden inline-flex items-center gap-2.5">
-            <img src={logo} alt="WorkInEurope" className="h-14 w-14 rounded-xl object-contain bg-card border border-border/10 p-1" />
-            <span className="font-display text-xl font-bold tracking-tight">WorkInEurope</span>
+            <img src={logo} alt="WorkInEurope" className="w-[110px] h-auto object-contain" />
+            {/* <span className="font-display text-xl font-bold tracking-tight">WorkInEurope</span> */}
           </Link>
         </div>
         <div

@@ -134,7 +134,7 @@ function Nav() {
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 glass-strong border-x-0 border-t-0 border-b border-border/15 shadow-soft">
-      <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 py-3.5 md:py-4">
+      <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 md:py-2">
         {/* Left: Logo */}
         <div className="flex-1 flex justify-start">
           <Link to="/" className="flex items-center">

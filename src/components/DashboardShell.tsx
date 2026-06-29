@@ -271,7 +271,7 @@ export function DashboardShell({
 
       <main className="min-w-0">
         <header className="sticky top-0 z-30 glass-strong border-b border-border">
-          <div className="flex items-center gap-3 px-4 sm:px-6 py-3.5">
+          <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 md:py-2 gap-3">
             <button 
               onClick={() => setMobileOpen(true)}
               className="lg:hidden h-9 w-9 rounded-lg grid place-items-center hover:bg-accent text-muted-foreground hover:text-foreground transition-colors shrink-0"
