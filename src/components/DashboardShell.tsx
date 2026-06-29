@@ -13,7 +13,6 @@ import {
   Calculator,
   Settings,
   LogOut,
-  Sparkles,
   Bell,
   Search,
   Users,
@@ -27,6 +26,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
+import logo from "@/Images/logo.png";
 
 type NavItem = { to: string; icon: LucideIcon; label: string; badge?: string };
 type NavGroup = { title: string; items: NavItem[] };
@@ -112,13 +112,11 @@ export function DashboardShell({
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex flex-col border-r border-border bg-card">
         <div className="p-5 border-b border-border">
-          <Link to="/" className="inline-flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
-              <Sparkles className="h-4 w-4 text-brand-foreground" />
-            </div>
+          <Link to="/" className="inline-flex items-center gap-3">
+            <img src={logo} alt="WorkInEurope" className="h-16 w-16 rounded-xl object-contain bg-card border border-border/10 p-1" />
             <div>
-              <div className="font-display text-lg leading-none">WorkInEurope</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">
+              <div className="font-display text-xl font-bold leading-none">WorkInEurope</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1.5">
                 {role === "candidate" ? "Candidate" : "Employer"}
               </div>
             </div>
@@ -192,13 +190,11 @@ export function DashboardShell({
           {/* Drawer Content */}
           <aside className="relative flex flex-col w-[280px] max-w-[80vw] h-full bg-card border-r border-border shadow-2xl animate-in slide-in-from-left duration-300">
             <div className="p-5 border-b border-border flex items-center justify-between">
-              <Link to="/" onClick={() => setMobileOpen(false)} className="inline-flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
-                  <Sparkles className="h-4 w-4 text-brand-foreground" />
-                </div>
+              <Link to="/" onClick={() => setMobileOpen(false)} className="inline-flex items-center gap-3">
+                <img src={logo} alt="WorkInEurope" className="h-14 w-14 rounded-xl object-contain bg-card border border-border/10 p-1" />
                 <div>
-                  <div className="font-display text-lg leading-none">WorkInEurope</div>
-                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">
+                  <div className="font-display text-xl font-bold leading-none">WorkInEurope</div>
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1.5">
                     {role === "candidate" ? "Candidate" : "Employer"}
                   </div>
                 </div>

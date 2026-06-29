@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { MOCK_JOBS, COUNTRIES, CATEGORIES, MODES, type Job } from "@/data/jobs";
-import { Search, MapPin, Briefcase, Calendar, ShieldCheck, ArrowRight, Bookmark, Sparkles, SlidersHorizontal } from "lucide-react";
+import { Search, MapPin, Briefcase, Calendar, ShieldCheck, ArrowRight, Bookmark, SlidersHorizontal } from "lucide-react";
+import logo from "@/Images/logo.png";
 
 export const Route = createFileRoute("/jobs")({
   head: () => ({
@@ -37,12 +38,10 @@ function JobsPage() {
   return (
     <div className="min-h-dvh bg-background">
       <header className="border-b border-border sticky top-0 z-30 glass-strong">
-        <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
-              <Sparkles className="h-4 w-4 text-brand-foreground" />
-            </div>
-            <span className="font-display text-lg">WorkInEurope</span>
+        <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="WorkInEurope" className="h-16 w-16 rounded-xl object-contain" />
+            <span className="font-display text-2xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
           </Link>
           <div className="flex items-center gap-2 text-sm">
             {user ? (

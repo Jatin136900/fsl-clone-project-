@@ -4,7 +4,6 @@ import { Link } from "@tanstack/react-router";
 import { useAuth } from "../context/AuthContext";
 import {
   ArrowRight,
-  Sparkles,
   PlayCircle,
   ShieldCheck,
   Brain,
@@ -25,6 +24,7 @@ import {
 } from "lucide-react";
 
 import type { Variants } from "framer-motion";
+import logo from "@/Images/logo.png";
 
 function AnimatedCounter({
   value,
@@ -137,11 +137,9 @@ function Nav() {
       <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 py-3.5 md:py-4">
         {/* Left: Logo */}
         <div className="flex-1 flex justify-start">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="relative h-8 w-8 rounded-lg bg-[image:var(--gradient-brand)] grid place-items-center">
-              <Sparkles className="h-4 w-4 text-brand-foreground" />
-            </div>
-            <span className="font-display text-xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="WorkInEurope" className="h-16 w-16 rounded-xl object-contain" />
+            <span className="font-display text-2xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
           </Link>
         </div>
 
@@ -571,11 +569,9 @@ function Footer() {
   return (
     <footer className="border-t border-border py-12">
       <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground text-center md:text-left">
-        <div className="flex items-center gap-2 justify-center md:justify-start">
-          <div className="h-7 w-7 rounded-md bg-[image:var(--gradient-brand)] grid place-items-center">
-            <Sparkles className="h-3.5 w-3.5 text-brand-foreground" />
-          </div>
-          <span className="font-display text-lg text-foreground">WorkInEurope</span>
+        <div className="flex items-center gap-3 justify-center md:justify-start">
+          <img src={logo} alt="WorkInEurope" className="h-14 w-14 rounded-xl object-contain" />
+          <span className="font-display text-xl text-foreground">WorkInEurope</span>
         </div>
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
           <a className="hover:text-foreground cursor-pointer">Privacy Policy</a>
