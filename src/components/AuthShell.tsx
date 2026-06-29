@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import React, { useState, type ReactNode } from "react";
-import logo from "@/Images/logo.png";
+import logo from "@/Images/WIE Logo.png";
 
 export function AuthShell({
   title,

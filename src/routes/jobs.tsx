@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { MOCK_JOBS, COUNTRIES, CATEGORIES, MODES, type Job } from "@/data/jobs";
 import { Search, MapPin, Briefcase, Calendar, ShieldCheck, ArrowRight, Bookmark, SlidersHorizontal } from "lucide-react";
-import logo from "@/Images/logo.png";
+import logo from "@/Images/WIE Logo.png";
 
 export const Route = createFileRoute("/jobs")({
   head: () => ({

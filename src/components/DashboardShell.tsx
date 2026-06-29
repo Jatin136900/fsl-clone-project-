@@ -26,7 +26,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import logo from "@/Images/logo.png";
+import logo from "@/Images/WIE Logo.png";
 
 type NavItem = { to: string; icon: LucideIcon; label: string; badge?: string };
 type NavGroup = { title: string; items: NavItem[] };
