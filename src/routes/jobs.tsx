@@ -39,9 +39,8 @@ function JobsPage() {
     <div className="min-h-dvh bg-background">
       <header className="border-b border-border sticky top-0 z-30 glass-strong">
         <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="WorkInEurope" className="h-16 w-16 rounded-xl object-contain" />
-            <span className="font-display text-2xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="WorkInEurope" className="w-[110px] h-auto object-contain" />
           </Link>
           <div className="flex items-center gap-2 text-sm">
             {user ? (

@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 import type { Variants } from "framer-motion";
-import logo from "@/Images/logo.png";
+import logo from "@/Images/WIE Logo.png";
 
 function AnimatedCounter({
   value,
@@ -137,9 +137,8 @@ function Nav() {
       <div className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-12 py-3.5 md:py-4">
         {/* Left: Logo */}
         <div className="flex-1 flex justify-start">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="WorkInEurope" className="h-16 w-16 rounded-xl object-contain" />
-            <span className="font-display text-2xl tracking-tight">WorkIn<span className="text-muted-foreground">Europe</span></span>
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="WorkInEurope" className="w-[110px] h-auto object-contain" />
           </Link>
         </div>
 
